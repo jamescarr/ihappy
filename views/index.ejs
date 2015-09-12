@@ -1,30 +1,49 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>Socket.IO chat</title>
-    <style>
-    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>iHappy Chat</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="/stylesheets/main.css">
     <script src="//cdn.jsdelivr.net/emojione/1.5.0/lib/js/emojione.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/emojione/1.5.0/assets/css/emojione.min.css" />
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.2/handlebars.min.js"></script>
     <script src="/javascripts/main.js"></script>
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <section class="convert-emoji">
-        <a href="#" data-emoji=":smile:">:smile:</a>
-        <a href="#" data-emoji=":heart_eyes_cat:">:heart_eyes_cat:</a>
-        <a href="#" data-emoji=":smiley_cat:">:smiley_cat:</a>
-        <a href="#" data-emoji=":tada:">:tada:</a>
-        <a href="#" data-emoji=":heart:">:heart:</a>
-      </section>
-      <button>Send</button>
-    </form>
+    <div id="container">
+      <div id="messages" class="container-fluid">
+        <div class='row'>
+          <div class='col-md-2'>
+            <img src='images/avatars/caitlynn.png' class='avatar'>
+          </div>
+          <div class='col-md-8 message'>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+          </div>
+        </div>
+      </div>
+      <form action="">
+        <section class="convert-emoji">
+          <a href="#" data-emoji=":smile:">:smile:</a>
+          <a href="#" data-emoji=":heart_eyes_cat:">:heart_eyes_cat:</a>
+          <a href="#" data-emoji=":smiley_cat:">:smiley_cat:</a>
+          <a href="#" data-emoji=":tada:">:tada:</a>
+          <a href="#" data-emoji=":heart:">:heart:</a>
+        </section>
+        <button>Send</button>
+      </form>
+    </div>
   </body>
 </html>
 

@@ -9,24 +9,14 @@ form {
 }
 form section { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
 form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-#messages { list-style-type: none; margin: 0; padding: 0; }
-#messages li {
-  padding: 5px 10px; 
-  display: block;
-}
-#messages li:nth-child(odd) { background: #eee;}
-
 .avatar {
-  height: 128px;
+  height: 98px;
 }
 
-ul#messages {
-    position: fixed;
-    top: 0;
-    height: 80%;
-    background: white;
-    width: 100%;
-    overflow: auto;
+.message.odd {
+  background-color: #f7f4d4;
 }
 
-#messages li { display: block; }
+.message.even {
+  background-color: #dcf3d4;
+}

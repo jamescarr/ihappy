@@ -1,20 +1,42 @@
+
 function message_template() {
-  var template = "<img src='images/avatars/{{ user }}.png' class='avatar'><div class='message'>{{{ msg }}}</div>";
-  return Handlebars.compile(template)
+  var templates = {
+    true: Handlebars.compile("<div class='row'><div class='col-md-2'><img src='images/avatars/{{ user }}.png' class='avatar'></div><div class='col-md-8 message'>{{{ msg }}}</div></div>"),
+    false: Handlebars.compile("<div class='row'><div class='message col-md-8'>{{{ msg }}}</div><div class='col-md-2'><img src='images/avatars/{{ user }}.png' class='avatar'></div></div>"),
+  }
+  var current_user = null;
+  var current_template = false;
+
+  return function(user) {
+    if (current_user != user) {
+      current_user = user;
+      current_template = !current_template;
+    }
+    return templates[current_template];
+  }
 }
 
 function adjust_scroll() {
   var height = $('#messages').height();
-
   $('#messages').animate({scrollTop: height});
-  console.log('adjust scroll to ' + height);
+}
+
+function ChatStream() {
+  this.msg_template = message_template()
+};
+
+ChatStream.prototype.append = function(message) {
+  var block = this.msg_template(message.user)(message);
+
+  $('#messages').append($(block));
+  adjust_scroll();
 }
 
 $(function() {
   var socket = io();
   var buffer = [];
   var user   = null;
-  var msg_template = message_template()
+  var stream = new ChatStream();
 
   $(".convert-emoji").each(function() {
     var original = $(this).html();
@@ -37,19 +59,16 @@ $(function() {
   socket.on('/user/join', function(avatar) {
     if (user === avatar) return;
     var msg = {user: avatar, msg: 'joined' }
-    $('#messages').append($('<li>')).append($(msg_template(msg)));
-    adjust_scroll();
+    stream.append(msg);
   });
 
   socket.on('/chat/message', function(msg){
     msg.msg = emojione.toImage(msg.msg);
-    $('#messages').append($('<li>')).append($(msg_template(msg)));
-    adjust_scroll();
+    stream.append(msg);
   });
 
   $('.convert-emoji a').click(function(e) {
     buffer.push($(this).attr('data-emoji'));
-
     return false;
   });
 });
