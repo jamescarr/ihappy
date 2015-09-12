@@ -16,6 +16,11 @@ function message_template() {
   }
 }
 
+function inflight_template() {
+  var template = "<div class='message'>{{{ msg }}}</div>";
+  return Handlebars.compile(template)
+}
+
 function adjust_scroll() {
   var height = $('#messages').height();
   $('#messages').animate({scrollTop: height});
@@ -48,6 +53,7 @@ $(function() {
   $('form').submit(function(){
     var text = buffer.join(' ');
     buffer = [];
+    $('#curm span').html('')
     socket.emit('/chat/message', {msg: text, user: user});
     return false;
   });
@@ -69,6 +75,8 @@ $(function() {
 
   $('.convert-emoji a').click(function(e) {
     buffer.push($(this).attr('data-emoji'));
+    var inflightText = buffer.join(' ')
+    $('#curm span').html(emojione.toImage(inflightText))
     return false;
   });
 })

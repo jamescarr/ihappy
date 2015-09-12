@@ -72,8 +72,6 @@ io.on('connection', function(socket){
   socket.emit('/user/assign', users[socket.id]);
   io.emit('/user/join', avatar)
 
-
-
   socket.on('disconnect', function(){
     avatars.push(users[socket.id])
     delete users[socket.id];
