@@ -11,16 +11,26 @@
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; text-align:right;}
+      .avatar {
+        height: 128px;
+      }
     </style>
     <script src="//cdn.jsdelivr.net/emojione/1.5.0/lib/js/emojione.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/emojione/1.5.0/assets/css/emojione.min.css" />
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.2/handlebars.min.js"></script>
     <script>
+      function message_template() {
+        var template = "<img src='images/avatars/{{ user }}.png' class='avatar'><p>{{{ msg }}}</p>";
+        return Handlebars.compile(template)
+      }
       $(function() {
         var socket = io();
         var buffer = [];
+        var user   = null;
+        var msg_template = message_template()
 
         $(".convert-emoji").each(function() {
           var original = $(this).html();
@@ -32,13 +42,19 @@
         $('form').submit(function(){
           var text = buffer.join(' ');
           buffer = [];
-          socket.emit('/chat/message', text);
+          console.log(socket.id);
+          socket.emit('/chat/message', {msg: text, user: user});
           return false;
+        });
+        
+        socket.on('/user/assign', function(avatar) {
+          user = avatar;
         });
 
         socket.on('/chat/message', function(msg){
-          var output = emojione.toImage(msg);
-          $('#messages').append($('<li>').append(output));
+          msg.msg = emojione.toImage(msg.msg);
+          console.log((msg_template(msg)));
+          $('#messages').append($('<li>')).append($(msg_template(msg)));
         });
 
         $('.convert-emoji a').click(function(e) {

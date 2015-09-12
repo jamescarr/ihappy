@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var fs = require('fs')
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -50,8 +51,6 @@ if (app.get('env') === 'development') {
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
@@ -60,14 +59,26 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+var avatars = fs.readdirSync("public/images/avatars").map(function(image) {
+  return image.replace(".png", "");
+});
+var users = {};
+
 io.on('connection', function(socket){
-  console.log('a user connected');
+  var avatar = avatars.pop();
+  var clientId = socket.id;
+  users[socket.id] = avatar;
+  
+  socket.emit('/user/assign', users[socket.id]);
+
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    avatars.push(users[socket.id])
+    delete users[socket.id];
   });
 
   socket.on('/chat/message', function(msg){
-    console.log("A message recieved! " + msg)
+    console.log(msg)
     io.emit('/chat/message', msg);
   });
 
