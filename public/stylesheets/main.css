@@ -6,7 +6,6 @@ form {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 30%;
 }
 form section { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
 form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
@@ -15,9 +14,7 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 #messages li:nth-child(odd) { background: #eee; text-align:right;}
 .avatar {
   height: 128px;
-  float: left;
 }
-.message: { float: right; }
 
 #messages {
     height: 70%;
