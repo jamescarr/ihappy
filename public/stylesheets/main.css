@@ -9,6 +9,15 @@ form {
 }
 form section { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
 form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+
+#messages {
+  margin: 10px;
+  height: 80%;
+  background: white;
+  width: 100%;
+  overflow: auto;
+}
+
 .avatar {
   height: 98px;
 }
