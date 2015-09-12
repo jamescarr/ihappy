@@ -69,8 +69,10 @@ io.on('connection', function(socket){
   var avatar = avatars.pop();
   var clientId = socket.id;
   users[socket.id] = avatar;
-  
   socket.emit('/user/assign', users[socket.id]);
+  io.emit('/user/join', avatar)
+
+
 
   socket.on('disconnect', function(){
     avatars.push(users[socket.id])

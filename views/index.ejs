@@ -51,6 +51,12 @@
           user = avatar;
         });
 
+        socket.on('/user/join', function(avatar) {
+          if (user === avatar) return;
+          msg = {user: avatar, msg: 'joined' }
+          $('#messages').append($('<li>')).append($(msg_template(msg)));
+        });
+
         socket.on('/chat/message', function(msg){
           msg.msg = emojione.toImage(msg.msg);
           console.log((msg_template(msg)));
