@@ -18,6 +18,10 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
   overflow: auto;
 }
 
+
+.convert-emoji a:hover {
+  border: 1px solid transparent;
+}
 .avatar {
   height: 98px;
 }
