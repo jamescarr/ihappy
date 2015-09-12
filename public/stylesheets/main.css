@@ -13,6 +13,9 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
   height: 98px;
 }
 
+.message {
+  padding: 10px;
+}
 .message.odd {
   background-color: #f7f4d4;
 }

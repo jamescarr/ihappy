@@ -1,8 +1,8 @@
 
 function message_template() {
   var templates = {
-    true: Handlebars.compile("<div class='row'><div class='col-md-2'><img src='images/avatars/{{ user }}.png' class='avatar'></div><div class='col-md-8 message'>{{{ msg }}}</div></div>"),
-    false: Handlebars.compile("<div class='row'><div class='message col-md-8'>{{{ msg }}}</div><div class='col-md-2'><img src='images/avatars/{{ user }}.png' class='avatar'></div></div>"),
+    true: Handlebars.compile("<div class='row'><div class='col-md-2'><img src='images/avatars/{{ user }}.png' class='avatar'></div><div class='col-md-8 message even'>{{{ msg }}}</div></div>"),
+    false: Handlebars.compile("<div class='row'><div class='odd message col-md-8'>{{{ msg }}}</div><div class='col-md-2'><img src='images/avatars/{{ user }}.png' class='avatar'></div></div>"),
   }
   var current_user = null;
   var current_template = false;
@@ -71,4 +71,4 @@ $(function() {
     buffer.push($(this).attr('data-emoji'));
     return false;
   });
-});
+})
