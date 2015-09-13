@@ -1,8 +1,10 @@
-
+var emojis = [
+  ':grinning:', ':joy:', ':innocent:', ':yum:', ':smile_cat:', ':heart_eyes_cat:', ':scream_cat:', ':ghost:', ':rose:', ':cow2:', ':horse:', ':dog:', ':whale:', ':monkey_face:', ':star2:', ':pizza:', ':pineapple:', ':cake:'
+];
 function message_template() {
   var templates = {
-    true: Handlebars.compile("<div class='row'><div class='col-md-3 col-xs-3'><img src='images/avatars/{{ user }}.png' class='avatar'></div><div class='col-md-6 col-xs-6 message even'>{{{ msg }}}</div></div>"),
-    false: Handlebars.compile("<div class='row'><div class='odd message col-md-6 col-xs-6'>{{{ msg }}}</div><div class='col-md-3 col-xs-3'><img src='images/avatars/{{ user }}.png' class='avatar'></div></div>"),
+    true: Handlebars.compile("<div class='row contained-message'><div class='col-md-3 col-xs-3'><img src='images/avatars/{{ user }}.png' class='avatar'></div><div class='col-md-8 col-xs-8 message even'>{{{ msg }}}</div></div>"),
+    false: Handlebars.compile("<div class='row contained-message'><div class='odd message col-md-8 col-xs-8'>{{{ msg }}}</div><div class='col-md-3 col-xs-3'><img src='images/avatars/{{ user }}.png' class='avatar'></div></div>"),
   }
   var current_user = null;
   var current_template = false;
@@ -22,7 +24,11 @@ function inflight_template() {
 }
 
 function adjust_scroll() {
-  var height = $('#messages').height();
+  var height = 0;
+  $('#messages div').each(function() {
+    height += $(this).height();
+
+  });
   console.log(height);
   $('#messages').animate({scrollTop: height});
 }
@@ -45,6 +51,12 @@ $(function() {
   var stream = new ChatStream();
 
   $(".convert-emoji").each(function() {
+    var self = this;
+    emojis.forEach(function(emoji) {
+      var fragment = $(' <a href="#" data-emoji="'+emoji+'">'+emoji+'</a>\n');
+      $(self).append(fragment);
+    });
+
     var original = $(this).html();
     // use .shortnameToImage if only converting shortnames (for slightly better performance)
     var converted = emojione.toImage(original);
