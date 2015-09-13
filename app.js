@@ -60,16 +60,37 @@ app.use(function(err, req, res, next) {
 });
 
 
+function BoundedArray(size) {
+  this.size = size;
+  this.array = [];
+}
+
+BoundedArray.prototype.getAll= function() {
+  return this.array;
+}
+BoundedArray.prototype.push = function(item) {
+  this.array.push(item);
+  if (this.array.length > this.size) {
+    this.array.shift();
+  }
+}
+
 var avatars = fs.readdirSync("public/images/avatars").map(function(image) {
   return image.replace(".png", "");
 });
 var users = {};
+var messageHistory = new BoundedArray(5);
 
 io.on('connection', function(socket){
   var avatar = avatars[Math.floor(Math.random()*avatars.length)]
   var clientId = socket.id;
   users[socket.id] = avatar;
   socket.emit('/user/assign', users[socket.id]);
+
+  messageHistory.getAll().forEach(function(msg) {
+    socket.emit('/chat/message', msg);
+  });
+
   io.emit('/user/join', avatar)
 
   socket.on('disconnect', function(){
@@ -78,7 +99,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('/chat/message', function(msg){
-    console.log(msg)
+    messageHistory.push(msg);
     io.emit('/chat/message', msg);
   });
 
