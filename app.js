@@ -66,7 +66,7 @@ var avatars = fs.readdirSync("public/images/avatars").map(function(image) {
 var users = {};
 
 io.on('connection', function(socket){
-  var avatar = avatars.pop();
+  var avatar = avatars[Math.floor(Math.random()*avatars.length)]
   var clientId = socket.id;
   users[socket.id] = avatar;
   socket.emit('/user/assign', users[socket.id]);

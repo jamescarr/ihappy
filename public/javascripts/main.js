@@ -1,8 +1,8 @@
 
 function message_template() {
   var templates = {
-    true: Handlebars.compile("<div class='row'><div class='col-md-4 col-xs-4'><img src='images/avatars/{{ user }}.png' class='avatar'></div><div class='col-md-6 col-xs-6 message even'>{{{ msg }}}</div></div>"),
-    false: Handlebars.compile("<div class='row'><div class='odd message col-md-6 col-xs-6'>{{{ msg }}}</div><div class='col-md-4 col-xs-4'><img src='images/avatars/{{ user }}.png' class='avatar'></div></div>"),
+    true: Handlebars.compile("<div class='row'><div class='col-md-3 col-xs-3'><img src='images/avatars/{{ user }}.png' class='avatar'></div><div class='col-md-6 col-xs-6 message even'>{{{ msg }}}</div></div>"),
+    false: Handlebars.compile("<div class='row'><div class='odd message col-md-6 col-xs-6'>{{{ msg }}}</div><div class='col-md-3 col-xs-3'><img src='images/avatars/{{ user }}.png' class='avatar'></div></div>"),
   }
   var current_user = null;
   var current_template = false;
