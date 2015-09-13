@@ -38,6 +38,7 @@ function ChatStream() {
 };
 
 ChatStream.prototype.append = function(message) {
+  message.msg = message.msg.replace('"//cdn.jsdelivr.net', '"https://cdn.jsdelivr.net')
   var block = this.msg_template(message.user)(message);
 
   $('#messages').append($(block));
@@ -59,7 +60,7 @@ $(function() {
 
     var original = $(this).html();
     // use .shortnameToImage if only converting shortnames (for slightly better performance)
-    var converted = emojione.toImage(original);
+    var converted = emojione.toImage(original).replace('"//cdn.jsdelivr.net', '"https://cdn.jsdelivr.net');
     $(this).html(converted);
   });
 
@@ -89,7 +90,7 @@ $(function() {
   $('.convert-emoji a').click(function(e) {
     buffer.push($(this).attr('data-emoji'));
     var inflightText = buffer.join(' ')
-    $('#curm span').html(emojione.toImage(inflightText))
+    $('#curm span').html(emojione.toImage(inflightText).replace('"//cdn.jsdelivr.net', '"https://cdn.jsdelivr.net'))
     return false;
   });
 })
